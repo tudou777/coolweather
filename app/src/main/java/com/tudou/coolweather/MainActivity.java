@@ -21,7 +21,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        TextView tv=findViewById(R.id.testText);
+
         HeConfig.switchToFreeServerNode();//切换和风天气到免费模式
         HeConfig.init("HE1812071751341905","cce5445a8ddc44a4867a4962c0a1f05b");//注册和风天气时分配的id和key
         /**
