@@ -9,6 +9,7 @@
     android:layout_height="wrap_content"
     android:layout_margin="15dp">
 
+
     <TextView
         android:id="@+id/degree_text"
         android:layout_width="wrap_content"
@@ -16,12 +17,27 @@
         android:layout_gravity="end"
         android:textColor="#fff"
         android:textSize="60sp"/>
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end"
+        >
+        <ImageView
+            android:id="@+id/cond_img"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:scaleType="center"
+            android:layout_gravity="end"
+
+            />
     <TextView
         android:id="@+id/weather_info_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="end"
         android:textColor="#fff"
-        android:textSize="20sp"/>
+        android:textSize="20sp" />
+    </LinearLayout>
 </LinearLayout>
 </android.support.constraint.ConstraintLayout>

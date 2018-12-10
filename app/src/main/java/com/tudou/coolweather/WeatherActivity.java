@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Build;
 import android.preference.PreferenceManager;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -29,6 +30,8 @@ import com.tudou.coolweather.util.HttpUtil;
 import java.io.IOException;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import interfaces.heweather.com.interfacesmodule.bean.Lang;
@@ -65,6 +68,7 @@ public class WeatherActivity extends AppCompatActivity {
    public DrawerLayout drawerLayout;
    private Button navButton;
     public String weatherId;
+    private ImageView condImg;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -92,6 +96,7 @@ public class WeatherActivity extends AppCompatActivity {
         bingPicImg=findViewById(R.id.bing_pic_img);
         swipeRefreshLayout=findViewById(R.id.swipe_refresh);
         swipeRefreshLayout.setColorSchemeResources(R.color.colorPrimary);
+        condImg=findViewById(R.id.cond_img);
 
         //切换城市
 //        chooseArea.setOnClickListener(new View.OnClickListener() {
@@ -224,6 +229,39 @@ public class WeatherActivity extends AppCompatActivity {
         String updateTime=weather.update.loc.split(" ")[1];
         String degree=weather.now.tmp+"℃";
         String weatherInfo=weather.now.cond_txt;//"天气:"+weather.now.cond_txt+"/风力:"+weather.now.wind_sc+"/风向:"+weather.now.wind_dir+"/湿度:"+weather.now.hum;
+        //根据时间和天气显示图片开始
+        String code= weather.now.cond_code;
+        String imageNameAm="a"+code;
+        String imageNamePm="a"+code+"n";
+        Calendar calendar=Calendar.getInstance();
+        int hour=calendar.get(Calendar.HOUR_OF_DAY);
+        int resId=0;
+        if(hour>=18||hour<6)
+        {
+             resId=getContext().getResources().getIdentifier(imageNamePm,"drawable",getContext().getPackageName());
+            if(resId!=0)
+            {
+                condImg.setImageResource(resId);
+            }
+            else
+            {
+                resId=getContext().getResources().getIdentifier(imageNameAm,"drawable",getContext().getPackageName());
+                if(resId!=0)
+                {
+                    condImg.setImageResource(resId);
+                }
+            }
+        }
+        else
+        {
+            resId=getContext().getResources().getIdentifier(imageNameAm,"drawable",getContext().getPackageName());
+            if(resId!=0)
+            {
+                condImg.setImageResource(resId);
+            }
+        }
+        //根据时间和天气显示图片结束
+        //condImg.setImageDrawable(ContextCompat.getDrawable(getApplicationContext(),R.drawable.a100));
 
         titleCity.setText(cityName);
         titleUpdateTime.setText(updateTime);
