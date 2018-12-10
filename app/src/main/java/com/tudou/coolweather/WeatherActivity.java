@@ -64,6 +64,7 @@ public class WeatherActivity extends AppCompatActivity {
    public SwipeRefreshLayout swipeRefreshLayout;
    public DrawerLayout drawerLayout;
    private Button navButton;
+    public String weatherId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -116,7 +117,6 @@ public class WeatherActivity extends AppCompatActivity {
         aqiText.setText("NaN");
         pm25Text.setText("NaN");
 
-        final String weatherId;
         //判断缓存中是否有背景图片和地区信息
         SharedPreferences prefs=PreferenceManager.getDefaultSharedPreferences(this);
         String bingPic=prefs.getString("bing_pic",null);
@@ -208,6 +208,10 @@ public class WeatherActivity extends AppCompatActivity {
             }
         });
         swipeRefreshLayout.setRefreshing(false);
+
+        //启动后台服务
+        Intent intent =new Intent(WeatherActivity.this,AutoUpdateService.class);
+        startService(intent);
     }
 
     /**
