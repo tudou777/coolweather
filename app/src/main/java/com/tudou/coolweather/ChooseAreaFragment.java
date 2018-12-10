@@ -2,8 +2,10 @@ package com.tudou.coolweather;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -19,9 +21,14 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
+import com.google.gson.reflect.TypeToken;
 import com.tudou.coolweather.db.City;
 import com.tudou.coolweather.db.County;
 import com.tudou.coolweather.db.Province;
+import com.tudou.coolweather.gson.Basic;
+import com.tudou.coolweather.gson.Weather;
 import com.tudou.coolweather.util.HttpUtil;
 import com.tudou.coolweather.util.Utility;
 
@@ -29,9 +36,15 @@ import org.litepal.LitePal;
 import org.litepal.crud.LitePalSupport;
 
 import java.io.IOException;
+import java.io.Serializable;
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
+import interfaces.heweather.com.interfacesmodule.bean.Lang;
+import interfaces.heweather.com.interfacesmodule.bean.Unit;
+import interfaces.heweather.com.interfacesmodule.view.HeConfig;
+import interfaces.heweather.com.interfacesmodule.view.HeWeather;
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.Response;
@@ -92,6 +105,18 @@ public class ChooseAreaFragment extends Fragment {
                 }
                 else if(currentLevel==LEVEL_COUNTY){
                     selectedCounty=countyList.get(position);
+                    if(getActivity() instanceof MainActivity) {
+                        Intent intent = new Intent(getActivity(), WeatherActivity.class);
+                        intent.putExtra("weather_Id", selectedCounty.getWeatherId());
+                        startActivity(intent);
+                        getActivity().finish();
+                    }else if (getActivity() instanceof WeatherActivity)
+                    {
+                        WeatherActivity activity=(WeatherActivity) getActivity();
+                        activity.drawerLayout.closeDrawers();
+                        activity.swipeRefreshLayout.setRefreshing(true);
+                        activity.requestWeather(selectedCounty.getWeatherId());
+                    }
                 }
             }
         });

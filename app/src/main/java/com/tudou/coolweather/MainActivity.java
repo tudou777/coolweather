@@ -1,5 +1,8 @@
 package com.tudou.coolweather;
 
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -20,10 +23,15 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        SharedPreferences prefs=PreferenceManager.getDefaultSharedPreferences(this);
+        if(prefs.getString("weather",null)!=null){
+            Intent intent=new Intent(this,WeatherActivity.class);
+            startActivity(intent);
+            finish();
+        }
 
-
-        HeConfig.switchToFreeServerNode();//切换和风天气到免费模式
-        HeConfig.init("HE1812071751341905","cce5445a8ddc44a4867a4962c0a1f05b");//注册和风天气时分配的id和key
+//        HeConfig.switchToFreeServerNode();//切换和风天气到免费模式
+//        HeConfig.init("HE1812071751341905","cce5445a8ddc44a4867a4962c0a1f05b");//注册和风天气时分配的id和key
         /**
          * 调用和风天气接口的demo
          * @author tudou

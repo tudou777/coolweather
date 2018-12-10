@@ -1,5 +1,6 @@
 package com.tudou.coolweather.util;
 
+import android.content.Context;
 import android.text.TextUtils;
 import android.util.Log;
 
@@ -8,13 +9,22 @@ import com.google.gson.reflect.TypeToken;
 import com.tudou.coolweather.db.City;
 import com.tudou.coolweather.db.County;
 import com.tudou.coolweather.db.Province;
+import com.tudou.coolweather.gson.Weather;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.lang.reflect.Type;
+import java.util.ArrayList;
 import java.util.List;
+
+import interfaces.heweather.com.interfacesmodule.bean.Lang;
+import interfaces.heweather.com.interfacesmodule.bean.Unit;
+import interfaces.heweather.com.interfacesmodule.view.HeConfig;
+import interfaces.heweather.com.interfacesmodule.view.HeWeather;
+
+import static org.litepal.LitePalApplication.getContext;
 
 
 //import com.google.gson.JsonArray;
@@ -124,4 +134,5 @@ public class Utility {
         }
         return false;
     }
+
 }
